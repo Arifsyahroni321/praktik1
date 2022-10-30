@@ -1,0 +1,20 @@
+USE pos;
+DESC employees;
+DESC offices;
+--INNER JOIN TABLE employees (4 field bebas) dengan offices (3 field bebas)
+SELECT offices.officeCode, offices.city, offices.country,offices.state, employees.email, employees.jobTitle, employees.firstName
+FROM offices INNER JOIN employees 
+ON offices.officecode = employees.officeCode;
+
+--INNER JOIN TABLE employees (4 field bebas)dengan offices (3 field bebas) dengan mengaliaskan tabelnya
+
+SELECT ofc.officeCode, ofc.city, ofc.country, ofc.state, empls.email, empls.jobTitle, empls.firstName
+FROM offices ofc INNER JOIN employees empls
+ON ofc.officecode = empls.officeCode;
+
+--OUTER JOIN TABLE employees (4 field bebas) dengan offices (3 field bebas) dengan mengaliaskan tabelnya
+
+SELECT ofc.officeCode, ofc.city, ofc.country, ofc.state, empls.email, empls.firstName, empls.lastName
+FROM offices ofc LEFT JOIN employees empls
+ON ofc.officecode = empls.officeCode;
+

@@ -1,0 +1,527 @@
+Microsoft Windows [Version 10.0.19044.2006]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Rony>cd \
+
+C:\>cd xampp\mysql\bin
+-- masuk ke ruang DB dbpegawai melalui CMD--
+
+C:\xampp\mysql\bin>mysql -u root -p dbpegawai
+Enter password:
+ERROR 2002 (HY000): Can't connect to MySQL server on 'localhost' (10061)
+
+C:\xampp\mysql\bin>mysql -u root -p dbpegawai
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [dbpegawai]> show tables;
++---------------------+
+| Tables_in_dbpegawai |
++---------------------+
+| divisi              |
+| pegawai             |
++---------------------+
+2 rows in set (0.043 sec)
+
+MariaDB [dbpegawai]> SELECT * FROM pegawai;
++----+------+--------------+--------+-------------+------------+----------+--------------+
+| id | nip  | nama         | gender | tmplahir    | tgllahir   | iddivisi | alamat       |
++----+------+--------------+--------+-------------+------------+----------+--------------+
+|  1 | 2122 | syahroni     | L      | probolinggo | 2002-09-28 |        1 | sumberkembar |
+|  2 | 2222 | arifsyahroni | L      | Probolinggo | 2002-09-01 |        1 | sogaan       |
+|  3 | 2223 | fita         | P      | bali        | 2003-02-21 |        1 | bucor        |
+|  4 | 2224 | fikiindra    | P      | Probolinggo | 0000-00-00 |        1 | duren        |
+|  5 | 2225 | keira        | P      | pakuniran   | 2001-02-21 |        1 | bucor        |
+| 15 | 2226 | Jupriyanto   | L      | Malang      | 2003-02-22 |        2 | sumberkembar |
+| 16 | 2227 | Izul         | L      | Probolinggo | 2004-02-03 |        2 | pandan       |
+| 17 | 2228 | Iza          | P      | Jemberr     | 2004-02-03 |        2 | tiris        |
+| 18 | 2229 | Inayati      | P      | Surabaya    | 0000-00-00 |        2 | alassumur    |
+| 19 | 2230 | Ila          | P      | Malang      | 2002-02-24 |        2 | Kalikajar    |
+| 20 | 2231 | Agus         | L      | Probolinggo | 2001-02-02 |        3 | bucor        |
+| 21 | 2232 | Dimas        | L      | Jakarta     | 2001-10-01 |        3 | Besuk        |
+| 22 | 2233 | Farhan       | L      | Jakarta     | 2001-11-22 |        3 | Kana         |
+| 23 | 2234 | Fira         | P      | Probolinggo | 2004-11-12 |        3 | Mais         |
+| 24 | 2235 | linda        | P      | Probolinggo | 2004-11-22 |        3 | Maron        |
+| 25 | 2236 | Firda        | P      | Probolinggo | 2002-02-03 |        4 | Kalikajar    |
+| 26 | 2237 | Hasbullah    | L      | Kalimantan  | 2002-06-03 |        4 | alaskandang  |
+| 27 | 2238 | Zain         | L      | Probolinggo | 2006-06-10 |        4 | alaskandang  |
++----+------+--------------+--------+-------------+------------+----------+--------------+
+18 rows in set (0.292 sec)
+
+MariaDB [dbpegawai]> ALTER TABLE pegawai ADD COLUMN berat_badan varchar(100);
+Query OK, 0 rows affected (0.374 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [dbpegawai]> desc pegawai;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| id          | int(11)       | NO   | PRI | NULL    | auto_increment |
+| nip         | char(11)      | NO   | UNI | NULL    |                |
+| nama        | varchar(30)   | NO   |     | NULL    |                |
+| gender      | enum('L','P') | NO   |     | NULL    |                |
+| tmplahir    | varchar(30)   | NO   |     | NULL    |                |
+| tgllahir    | date          | NO   |     | NULL    |                |
+| iddivisi    | int(11)       | NO   |     | NULL    |                |
+| alamat      | text          | YES  |     | NULL    |                |
+| berat_badan | varchar(100)  | YES  |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+9 rows in set (0.118 sec)
+
+MariaDB [dbpegawai]> INSERT INTO pegawai(nip,berat_badan) VALUES
+    -> ('2122','45');
+ERROR 1062 (23000): Duplicate entry '2122' for key 'nip'
+MariaDB [dbpegawai]> INSERT INTO pegawai(berat_badan,id) VALUES
+    -> ('50',1);
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+MariaDB [dbpegawai]> SELECT * FROM pegawai;
++----+------+--------------+--------+-------------+------------+----------+--------------+-------------+
+| id | nip  | nama         | gender | tmplahir    | tgllahir   | iddivisi | alamat       | berat_badan |
++----+------+--------------+--------+-------------+------------+----------+--------------+-------------+
+|  1 | 2122 | syahroni     | L      | probolinggo | 2002-09-28 |        1 | sumberkembar | NULL        |
+|  2 | 2222 | arifsyahroni | L      | Probolinggo | 2002-09-01 |        1 | sogaan       | NULL        |
+|  3 | 2223 | fita         | P      | bali        | 2003-02-21 |        1 | bucor        | NULL        |
+|  4 | 2224 | fikiindra    | P      | Probolinggo | 0000-00-00 |        1 | duren        | NULL        |
+|  5 | 2225 | keira        | P      | pakuniran   | 2001-02-21 |        1 | bucor        | NULL        |
+| 15 | 2226 | Jupriyanto   | L      | Malang      | 2003-02-22 |        2 | sumberkembar | NULL        |
+| 16 | 2227 | Izul         | L      | Probolinggo | 2004-02-03 |        2 | pandan       | NULL        |
+| 17 | 2228 | Iza          | P      | Jemberr     | 2004-02-03 |        2 | tiris        | NULL        |
+| 18 | 2229 | Inayati      | P      | Surabaya    | 0000-00-00 |        2 | alassumur    | NULL        |
+| 19 | 2230 | Ila          | P      | Malang      | 2002-02-24 |        2 | Kalikajar    | NULL        |
+| 20 | 2231 | Agus         | L      | Probolinggo | 2001-02-02 |        3 | bucor        | NULL        |
+| 21 | 2232 | Dimas        | L      | Jakarta     | 2001-10-01 |        3 | Besuk        | NULL        |
+| 22 | 2233 | Farhan       | L      | Jakarta     | 2001-11-22 |        3 | Kana         | NULL        |
+| 23 | 2234 | Fira         | P      | Probolinggo | 2004-11-12 |        3 | Mais         | NULL        |
+| 24 | 2235 | linda        | P      | Probolinggo | 2004-11-22 |        3 | Maron        | NULL        |
+| 25 | 2236 | Firda        | P      | Probolinggo | 2002-02-03 |        4 | Kalikajar    | NULL        |
+| 26 | 2237 | Hasbullah    | L      | Kalimantan  | 2002-06-03 |        4 | alaskandang  | NULL        |
+| 27 | 2238 | Zain         | L      | Probolinggo | 2006-06-10 |        4 | alaskandang  | NULL        |
++----+------+--------------+--------+-------------+------------+----------+--------------+-------------+
+18 rows in set (0.004 sec)
+
+MariaDB [dbpegawai]> INSERT INTO pegawai(nip,nama,gender,tmplahir,tgllahir,iddivisi,alamat,berat_badan) VALUES
+    -> ('2239','ubet','L','Problinggo','2004-09-12',4,'sumberkembar','44');
+Query OK, 1 row affected (0.120 sec)
+
+MariaDB [dbpegawai]> INSERT INTO pegawai(nip,nama,gender,tmplahir,tgllahir,iddivisi,alamat,berat_badan) VALUES
+    -> ('2240','Indah','P','Jakarta','2002-09-22',4,'jabotabek','64');
+Query OK, 1 row affected (0.079 sec)
+
+MariaDB [dbpegawai]> SELECT * FROM pegawai;
++----+------+--------------+--------+-------------+------------+----------+--------------+-------------+
+| id | nip  | nama         | gender | tmplahir    | tgllahir   | iddivisi | alamat       | berat_badan |
++----+------+--------------+--------+-------------+------------+----------+--------------+-------------+
+|  1 | 2122 | syahroni     | L      | probolinggo | 2002-09-28 |        1 | sumberkembar | NULL        |
+|  2 | 2222 | arifsyahroni | L      | Probolinggo | 2002-09-01 |        1 | sogaan       | NULL        |
+|  3 | 2223 | fita         | P      | bali        | 2003-02-21 |        1 | bucor        | NULL        |
+|  4 | 2224 | fikiindra    | P      | Probolinggo | 0000-00-00 |        1 | duren        | NULL        |
+|  5 | 2225 | keira        | P      | pakuniran   | 2001-02-21 |        1 | bucor        | NULL        |
+| 15 | 2226 | Jupriyanto   | L      | Malang      | 2003-02-22 |        2 | sumberkembar | NULL        |
+| 16 | 2227 | Izul         | L      | Probolinggo | 2004-02-03 |        2 | pandan       | NULL        |
+| 17 | 2228 | Iza          | P      | Jemberr     | 2004-02-03 |        2 | tiris        | NULL        |
+| 18 | 2229 | Inayati      | P      | Surabaya    | 0000-00-00 |        2 | alassumur    | NULL        |
+| 19 | 2230 | Ila          | P      | Malang      | 2002-02-24 |        2 | Kalikajar    | NULL        |
+| 20 | 2231 | Agus         | L      | Probolinggo | 2001-02-02 |        3 | bucor        | NULL        |
+| 21 | 2232 | Dimas        | L      | Jakarta     | 2001-10-01 |        3 | Besuk        | NULL        |
+| 22 | 2233 | Farhan       | L      | Jakarta     | 2001-11-22 |        3 | Kana         | NULL        |
+| 23 | 2234 | Fira         | P      | Probolinggo | 2004-11-12 |        3 | Mais         | NULL        |
+| 24 | 2235 | linda        | P      | Probolinggo | 2004-11-22 |        3 | Maron        | NULL        |
+| 25 | 2236 | Firda        | P      | Probolinggo | 2002-02-03 |        4 | Kalikajar    | NULL        |
+| 26 | 2237 | Hasbullah    | L      | Kalimantan  | 2002-06-03 |        4 | alaskandang  | NULL        |
+| 27 | 2238 | Zain         | L      | Probolinggo | 2006-06-10 |        4 | alaskandang  | NULL        |
+| 31 | 2239 | ubet         | L      | Problinggo  | 2004-09-12 |        4 | sumberkembar | 44          |
+| 32 | 2240 | Indah        | P      | Jakarta     | 2002-09-22 |        4 | jabotabek    | 64          |
++----+------+--------------+--------+-------------+------------+----------+--------------+-------------+
+20 rows in set (0.004 sec)
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '30' WHERE id = 1;
+Query OK, 1 row affected (0.382 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '35' WHERE id = 2;
+Query OK, 1 row affected (0.116 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '35' WHERE id = 3;
+Query OK, 1 row affected (0.087 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '40' WHERE id = 4;
+Query OK, 1 row affected (0.072 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '40' WHERE id = 5;
+Query OK, 1 row affected (0.053 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '45' WHERE id = 15;
+Query OK, 1 row affected (0.042 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '55' WHERE id = 16;
+Query OK, 1 row affected (0.049 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '52' WHERE id = 17;
+Query OK, 1 row affected (0.034 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '51' WHERE id = 18;
+Query OK, 1 row affected (0.073 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '31' WHERE id = 19;
+Query OK, 1 row affected (0.085 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '61' WHERE id = 20;
+Query OK, 1 row affected (0.493 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '61' WHERE id = 21;
+Query OK, 1 row affected (0.092 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '41' WHERE id = 22;
+Query OK, 1 row affected (0.181 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '44' WHERE id = 23;
+Query OK, 1 row affected (0.081 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '42' WHERE id = 24;
+Query OK, 1 row affected (0.101 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '52' WHERE id = 25;
+Query OK, 1 row affected (0.109 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '48' WHERE id = 26;
+Query OK, 1 row affected (0.051 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '47' WHERE id = 27;
+Query OK, 1 row affected (0.142 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '53' WHERE id = 31;
+Query OK, 1 row affected (0.100 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE pegawai SET berat_badan = '57' WHERE id = 32;
+Query OK, 1 row affected (0.057 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> SELECT * FROM pegawai;
++----+------+--------------+--------+-------------+------------+----------+--------------+-------------+
+| id | nip  | nama         | gender | tmplahir    | tgllahir   | iddivisi | alamat       | berat_badan |
++----+------+--------------+--------+-------------+------------+----------+--------------+-------------+
+|  1 | 2122 | syahroni     | L      | probolinggo | 2002-09-28 |        1 | sumberkembar | 30          |
+|  2 | 2222 | arifsyahroni | L      | Probolinggo | 2002-09-01 |        1 | sogaan       | 35          |
+|  3 | 2223 | fita         | P      | bali        | 2003-02-21 |        1 | bucor        | 35          |
+|  4 | 2224 | fikiindra    | P      | Probolinggo | 0000-00-00 |        1 | duren        | 40          |
+|  5 | 2225 | keira        | P      | pakuniran   | 2001-02-21 |        1 | bucor        | 40          |
+| 15 | 2226 | Jupriyanto   | L      | Malang      | 2003-02-22 |        2 | sumberkembar | 45          |
+| 16 | 2227 | Izul         | L      | Probolinggo | 2004-02-03 |        2 | pandan       | 55          |
+| 17 | 2228 | Iza          | P      | Jemberr     | 2004-02-03 |        2 | tiris        | 52          |
+| 18 | 2229 | Inayati      | P      | Surabaya    | 0000-00-00 |        2 | alassumur    | 51          |
+| 19 | 2230 | Ila          | P      | Malang      | 2002-02-24 |        2 | Kalikajar    | 31          |
+| 20 | 2231 | Agus         | L      | Probolinggo | 2001-02-02 |        3 | bucor        | 61          |
+| 21 | 2232 | Dimas        | L      | Jakarta     | 2001-10-01 |        3 | Besuk        | 61          |
+| 22 | 2233 | Farhan       | L      | Jakarta     | 2001-11-22 |        3 | Kana         | 41          |
+| 23 | 2234 | Fira         | P      | Probolinggo | 2004-11-12 |        3 | Mais         | 44          |
+| 24 | 2235 | linda        | P      | Probolinggo | 2004-11-22 |        3 | Maron        | 42          |
+| 25 | 2236 | Firda        | P      | Probolinggo | 2002-02-03 |        4 | Kalikajar    | 52          |
+| 26 | 2237 | Hasbullah    | L      | Kalimantan  | 2002-06-03 |        4 | alaskandang  | 48          |
+| 27 | 2238 | Zain         | L      | Probolinggo | 2006-06-10 |        4 | alaskandang  | 47          |
+| 31 | 2239 | ubet         | L      | Problinggo  | 2004-09-12 |        4 | sumberkembar | 53          |
+| 32 | 2240 | Indah        | P      | Jakarta     | 2002-09-22 |        4 | jabotabek    | 57          |
++----+------+--------------+--------+-------------+------------+----------+--------------+-------------+
+20 rows in set (0.004 sec)
+
+MariaDB [dbpegawai]> SELECT nip,nama,gender,alamat FROM pegawai;
++------+--------------+--------+--------------+
+| nip  | nama         | gender | alamat       |
++------+--------------+--------+--------------+
+| 2122 | syahroni     | L      | sumberkembar |
+| 2222 | arifsyahroni | L      | sogaan       |
+| 2223 | fita         | P      | bucor        |
+| 2224 | fikiindra    | P      | duren        |
+| 2225 | keira        | P      | bucor        |
+| 2226 | Jupriyanto   | L      | sumberkembar |
+| 2227 | Izul         | L      | pandan       |
+| 2228 | Iza          | P      | tiris        |
+| 2229 | Inayati      | P      | alassumur    |
+| 2230 | Ila          | P      | Kalikajar    |
+| 2231 | Agus         | L      | bucor        |
+| 2232 | Dimas        | L      | Besuk        |
+| 2233 | Farhan       | L      | Kana         |
+| 2234 | Fira         | P      | Mais         |
+| 2235 | linda        | P      | Maron        |
+| 2236 | Firda        | P      | Kalikajar    |
+| 2237 | Hasbullah    | L      | alaskandang  |
+| 2238 | Zain         | L      | alaskandang  |
+| 2239 | ubet         | L      | sumberkembar |
+| 2240 | Indah        | P      | jabotabek    |
++------+--------------+--------+--------------+
+20 rows in set (0.005 sec)
+
+MariaDB [dbpegawai]> SELECT nip,nama,alamat FROM pegawai WHERE gender = 'L';
++------+--------------+--------------+
+| nip  | nama         | alamat       |
++------+--------------+--------------+
+| 2122 | syahroni     | sumberkembar |
+| 2222 | arifsyahroni | sogaan       |
+| 2226 | Jupriyanto   | sumberkembar |
+| 2227 | Izul         | pandan       |
+| 2231 | Agus         | bucor        |
+| 2232 | Dimas        | Besuk        |
+| 2233 | Farhan       | Kana         |
+| 2237 | Hasbullah    | alaskandang  |
+| 2238 | Zain         | alaskandang  |
+| 2239 | ubet         | sumberkembar |
++------+--------------+--------------+
+10 rows in set (0.075 sec)
+
+MariaDB [dbpegawai]> SELECT * FROM pegawai where tmplahir ='Probolinggo';
++----+------+--------------+--------+-------------+------------+----------+--------------+-------------+
+| id | nip  | nama         | gender | tmplahir    | tgllahir   | iddivisi | alamat       | berat_badan |
++----+------+--------------+--------+-------------+------------+----------+--------------+-------------+
+|  1 | 2122 | syahroni     | L      | probolinggo | 2002-09-28 |        1 | sumberkembar | 30          |
+|  2 | 2222 | arifsyahroni | L      | Probolinggo | 2002-09-01 |        1 | sogaan       | 35          |
+|  4 | 2224 | fikiindra    | P      | Probolinggo | 0000-00-00 |        1 | duren        | 40          |
+| 16 | 2227 | Izul         | L      | Probolinggo | 2004-02-03 |        2 | pandan       | 55          |
+| 20 | 2231 | Agus         | L      | Probolinggo | 2001-02-02 |        3 | bucor        | 61          |
+| 23 | 2234 | Fira         | P      | Probolinggo | 2004-11-12 |        3 | Mais         | 44          |
+| 24 | 2235 | linda        | P      | Probolinggo | 2004-11-22 |        3 | Maron        | 42          |
+| 25 | 2236 | Firda        | P      | Probolinggo | 2002-02-03 |        4 | Kalikajar    | 52          |
+| 27 | 2238 | Zain         | L      | Probolinggo | 2006-06-10 |        4 | alaskandang  | 47          |
++----+------+--------------+--------+-------------+------------+----------+--------------+-------------+
+9 rows in set (0.005 sec)
+
+MariaDB [dbpegawai]> SELECT * FROM pegawai WHERE nip ='2124';
+Empty set (0.093 sec)
+
+MariaDB [dbpegawai]> SELECT * FROM pegawai WHERE nip ='2224';
++----+------+-----------+--------+-------------+------------+----------+--------+-------------+
+| id | nip  | nama      | gender | tmplahir    | tgllahir   | iddivisi | alamat | berat_badan |
++----+------+-----------+--------+-------------+------------+----------+--------+-------------+
+|  4 | 2224 | fikiindra | P      | Probolinggo | 0000-00-00 |        1 | duren  | 40          |
++----+------+-----------+--------+-------------+------------+----------+--------+-------------+
+1 row in set (0.004 sec)
+
+MariaDB [dbpegawai]> SELECT * FROM pegawai WHERE gender ='P';
++----+------+-----------+--------+-------------+------------+----------+-----------+-------------+
+| id | nip  | nama      | gender | tmplahir    | tgllahir   | iddivisi | alamat    | berat_badan |
++----+------+-----------+--------+-------------+------------+----------+-----------+-------------+
+|  3 | 2223 | fita      | P      | bali        | 2003-02-21 |        1 | bucor     | 35          |
+|  4 | 2224 | fikiindra | P      | Probolinggo | 0000-00-00 |        1 | duren     | 40          |
+|  5 | 2225 | keira     | P      | pakuniran   | 2001-02-21 |        1 | bucor     | 40          |
+| 17 | 2228 | Iza       | P      | Jemberr     | 2004-02-03 |        2 | tiris     | 52          |
+| 18 | 2229 | Inayati   | P      | Surabaya    | 0000-00-00 |        2 | alassumur | 51          |
+| 19 | 2230 | Ila       | P      | Malang      | 2002-02-24 |        2 | Kalikajar | 31          |
+| 23 | 2234 | Fira      | P      | Probolinggo | 2004-11-12 |        3 | Mais      | 44          |
+| 24 | 2235 | linda     | P      | Probolinggo | 2004-11-22 |        3 | Maron     | 42          |
+| 25 | 2236 | Firda     | P      | Probolinggo | 2002-02-03 |        4 | Kalikajar | 52          |
+| 32 | 2240 | Indah     | P      | Jakarta     | 2002-09-22 |        4 | jabotabek | 57          |
++----+------+-----------+--------+-------------+------------+----------+-----------+-------------+
+10 rows in set (0.004 sec)
+
+MariaDB [dbpegawai]> SELECT nip,nama,gender FROM pegawai WHERE nip IN('2240','2234');
++------+-------+--------+
+| nip  | nama  | gender |
++------+-------+--------+
+| 2234 | Fira  | P      |
+| 2240 | Indah | P      |
++------+-------+--------+
+2 rows in set (0.095 sec)
+MariaDB [dbpegawai]> SELECT nama,gender,alamat FROM pegawai ORDER BY nama ASC;
++--------------+--------+--------------+
+| nama         | gender | alamat       |
++--------------+--------+--------------+
+| Agus         | L      | bucor        |
+| arifsyahroni | L      | sogaan       |
+| Dimas        | L      | Besuk        |
+| Farhan       | L      | Kana         |
+| fikiindra    | P      | duren        |
+| Fira         | P      | Mais         |
+| Firda        | P      | Kalikajar    |
+| fita         | P      | bucor        |
+| Hasbullah    | L      | alaskandang  |
+| Ila          | P      | Kalikajar    |
+| Inayati      | P      | alassumur    |
+| Indah        | P      | jabotabek    |
+| Iza          | P      | tiris        |
+| Izul         | L      | pandan       |
+| Jupriyanto   | L      | sumberkembar |
+| keira        | P      | bucor        |
+| linda        | P      | Maron        |
+| syahroni     | L      | sumberkembar |
+| ubet         | L      | sumberkembar |
+| Zain         | L      | alaskandang  |
++--------------+--------+--------------+
+20 rows in set (0.018 sec)
+
+MariaDB [dbpegawai]> SELECT nama,gender,alamat,berat_badan,
+    -> CASE
+    -> WHEN berat_badan > 50 THEN 'gemuk'
+    -> WHEN berat_badan >= 20 AND berat_badan <=50 THEN 'kurus'
+    -> ELSE 'kurang'
+    -> END AS status_badan FROM pegawai;
++--------------+--------+--------------+-------------+--------------+
+| nama         | gender | alamat       | berat_badan | status_badan |
++--------------+--------+--------------+-------------+--------------+
+| syahroni     | L      | sumberkembar | 30          | kurus        |
+| arifsyahroni | L      | sogaan       | 35          | kurus        |
+| fita         | P      | bucor        | 35          | kurus        |
+| fikiindra    | P      | duren        | 40          | kurus        |
+| keira        | P      | bucor        | 40          | kurus        |
+| Jupriyanto   | L      | sumberkembar | 45          | kurus        |
+| Izul         | L      | pandan       | 55          | gemuk        |
+| Iza          | P      | tiris        | 52          | gemuk        |
+| Inayati      | P      | alassumur    | 51          | gemuk        |
+| Ila          | P      | Kalikajar    | 31          | kurus        |
+| Agus         | L      | bucor        | 61          | gemuk        |
+| Dimas        | L      | Besuk        | 61          | gemuk        |
+| Farhan       | L      | Kana         | 41          | kurus        |
+| Fira         | P      | Mais         | 44          | kurus        |
+| linda        | P      | Maron        | 42          | kurus        |
+| Firda        | P      | Kalikajar    | 52          | gemuk        |
+| Hasbullah    | L      | alaskandang  | 48          | kurus        |
+| Zain         | L      | alaskandang  | 47          | kurus        |
+| ubet         | L      | sumberkembar | 53          | gemuk        |
+| Indah        | P      | jabotabek    | 57          | gemuk        |
++--------------+--------+--------------+-------------+--------------+
+20 rows in set (0.140 sec)
+
+MariaDB [dbpegawai]> SELECT nip,nama,gender,tmplahir,tgllahir,alamat FROM pegawai LIMIT 5;
++------+--------------+--------+-------------+------------+--------------+
+| nip  | nama         | gender | tmplahir    | tgllahir   | alamat       |
++------+--------------+--------+-------------+------------+--------------+
+| 2122 | syahroni     | L      | probolinggo | 2002-09-28 | sumberkembar |
+| 2222 | arifsyahroni | L      | Probolinggo | 2002-09-01 | sogaan       |
+| 2223 | fita         | P      | bali        | 2003-02-21 | bucor        |
+| 2224 | fikiindra    | P      | Probolinggo | 0000-00-00 | duren        |
+| 2225 | keira        | P      | pakuniran   | 2001-02-21 | bucor        |
++------+--------------+--------+-------------+------------+--------------+
+5 rows in set (0.004 sec)
+
+MariaDB [dbpegawai]> SELECT nip,nama,gender,tmplahir,tgllahir,alamat FROM pegawai LIMIT 5 OFFSET 5;
++------+------------+--------+-------------+------------+--------------+
+| nip  | nama       | gender | tmplahir    | tgllahir   | alamat       |
++------+------------+--------+-------------+------------+--------------+
+| 2226 | Jupriyanto | L      | Malang      | 2003-02-22 | sumberkembar |
+| 2227 | Izul       | L      | Probolinggo | 2004-02-03 | pandan       |
+| 2228 | Iza        | P      | Jemberr     | 2004-02-03 | tiris        |
+| 2229 | Inayati    | P      | Surabaya    | 0000-00-00 | alassumur    |
+| 2230 | Ila        | P      | Malang      | 2002-02-24 | Kalikajar    |
++------+------------+--------+-------------+------------+--------------+
+5 rows in set (0.029 sec)
+
+MariaDB [dbpegawai]> SELECT nip,nama,gender,tmplahir,tgllahir,alamat FROM pegawai LIMIT 5 OFFSET 20;
+Empty set (0.004 sec)
+
+MariaDB [dbpegawai]> SELECT nip,nama,gender,tmplahir,tgllahir,alamat FROM pegawai LIMIT 5 OFFSET 15;
++------+-----------+--------+-------------+------------+--------------+
+| nip  | nama      | gender | tmplahir    | tgllahir   | alamat       |
++------+-----------+--------+-------------+------------+--------------+
+| 2236 | Firda     | P      | Probolinggo | 2002-02-03 | Kalikajar    |
+| 2237 | Hasbullah | L      | Kalimantan  | 2002-06-03 | alaskandang  |
+| 2238 | Zain      | L      | Probolinggo | 2006-06-10 | alaskandang  |
+| 2239 | ubet      | L      | Problinggo  | 2004-09-12 | sumberkembar |
+| 2240 | Indah     | P      | Jakarta     | 2002-09-22 | jabotabek    |
++------+-----------+--------+-------------+------------+--------------+
+5 rows in set (0.003 sec)
+
+MariaDB [dbpegawai]> SELECT COUNT(nama) AS jml_pegawai FROM pegawai;
++-------------+
+| jml_pegawai |
++-------------+
+|          20 |
++-------------+
+1 row in set (0.102 sec)
+
+MariaDB [dbpegawai]> SELECT * FROM pegawai WHERE umur = (SELECT MAX(umur) FROM pegawai);
++----+------+--------+--------+-------------+------------+----------+--------+-------------+------+
+| id | nip  | nama   | gender | tmplahir    | tgllahir   | iddivisi | alamat | berat_badan | umur |
++----+------+--------+--------+-------------+------------+----------+--------+-------------+------+
+|  5 | 2225 | keira  | P      | pakuniran   | 2001-02-21 |        1 | bucor  | 40          | 21   |
+| 20 | 2231 | Agus   | L      | Probolinggo | 2001-02-02 |        3 | bucor  | 61          | 21   |
+| 21 | 2232 | Dimas  | L      | Jakarta     | 2001-10-01 |        3 | Besuk  | 61          | 21   |
+| 22 | 2233 | Farhan | L      | Jakarta     | 2001-11-22 |        3 | Kana   | 41          | 21   |
++----+------+--------+--------+-------------+------------+----------+--------+-------------+------+
+4 rows in set (0.007 sec)
+
+MariaDB [dbpegawai]> SELECT * FROM pegawai WHERE berat_badan = (SELECT MIN(berat_badan) FROM pegawai);
++----+------+----------+--------+-------------+------------+----------+--------------+-------------+------+
+| id | nip  | nama     | gender | tmplahir    | tgllahir   | iddivisi | alamat       | berat_badan | umur |
++----+------+----------+--------+-------------+------------+----------+--------------+-------------+------+
+|  1 | 2122 | syahroni | L      | probolinggo | 2002-09-28 |        1 | sumberkembar | 30          | 20   |
++----+------+----------+--------+-------------+------------+----------+--------------+-------------+------+
+1 row in set (0.063 sec)
+
+MariaDB [dbpegawai]> SELECT AVG(umur) AS umur_rata2 FROM pegawai;
++------------+
+| umur_rata2 |
++------------+
+|       17.5 |
++------------+
+1 row in set, 2 warnings (0.067 sec)
+
+
+MariaDB [dbpegawai]> SELECT COUNT(gender) AS jml_laki2 FROM pegawai WHERE gender = 'L';
++-----------+
+| jml_laki2 |
++-----------+
+|        10 |
++-----------+
+1 row in set (0.004 sec)
+
+MariaDB [dbpegawai]> SELECT COUNT(gender) AS jml_prempuan FROM pegawai WHERE gender = 'P';
++--------------+
+| jml_prempuan |
++--------------+
+|           10 |
++--------------+
+1 row in set (0.004 sec)
+
+MariaDB [dbpegawai]> SELECT SUM(berat_badan) AS totalberat_pegawai from pegawai;
++--------------------+
+| totalberat_pegawai |
++--------------------+
+|                920 |
++--------------------+
+1 row in set (0.056 sec)
+
+
+MariaDB [dbpegawai]> SELECT gender, COUNT(gender) AS total_pegawai FROM pegawai;
++--------+---------------+
+| gender | total_pegawai |
++--------+---------------+
+| L      |            20 |
++--------+---------------+
+1 row in set (0.004 sec)
+
+MariaDB [dbpegawai]> SELECT COUNT(gender) AS jml_prempuan FROM pegawai WHERE gender = 'P' GROUP BY gender;
++--------------+
+| jml_prempuan |
++--------------+
+|           10 |
++--------------+
+1 row in set (0.004 sec)
+
+MariaDB [dbpegawai]> SELECT COUNT(gender) AS jml_laki2 FROM pegawai WHERE gender = 'L' GROUP BY gender;
++-----------+
+| jml_laki2 |
++-----------+
+|        10 |
++-----------+
+1 row in set (0.004 sec)
+

@@ -1,0 +1,26 @@
+USE pos;
+
+-- INNER JOIN 4 TABLE: CUSTOMERS ,ORDERS, ORDERSDETAILS, PRODUCTS
+-- MENGGUNAKAN ALIAS TABLE
+SELECT e.firstName, e.jobTitle, e.email, 
+ o.addressLine1, o.phone,  o.city as kota,
+p.paymentDate, p.amount, 
+c.customerName, c.phone as telp, c.city
+FROM customers c
+INNER JOIN employees e ON e.employeeNumber = c.salesRepEmployeeNumber
+INNER JOIN offices o ON o.officeCode = e.officeCode
+INNER JOIN payments p ON p.customerNumber = c.customerNumber;
+
+-- buat tabel view(bayangan)
+CREATE VIEW customer_vw AS
+SELECT e.firstName, e.jobTitle, e.email, 
+ o.addressLine1, o.phone,  o.city as kota,
+p.paymentDate, p.amount, 
+c.customerName, c.phone as telp, c.city
+FROM customers c
+INNER JOIN employees e ON e.employeeNumber = c.salesRepEmployeeNumber
+INNER JOIN offices o ON o.officeCode = e.officeCode
+INNER JOIN payments p ON p.customerNumber = c.customerNumber;
+
+
+

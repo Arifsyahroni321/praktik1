@@ -1,0 +1,120 @@
+DELIMITER $$
+CREATE PROCEDURE inputJabatan(nip char(3),nama varchar(45),jabatan_id int,divisi_id int, gender enum('L','P'),tmp_lahir varchar(45),tgl_lahir date, alamat text)
+BEGIN
+    INSERT INTO pegawai(nip,nama,jabatan,divisi,gender,tmp_lahir,tgl_lahir,alamat) VALUES (nip,nama,jabatan_id,divisi_id,gender,tmp_lahir,tgl_lahir,alamat);
+END$$
+
+CALL inputPegawai('222','arif',1,1,'L','probolinngo','2002-08-28','kraksaan');
+SELECT * FROM pegawai;
+--fungsi showpegawai
+DELIMITER $$
+CREATE PROCEDURE showPegawai()
+BEGIN
+  SELECT * FROM pegawai;
+  END $$
+
+  CALL showPegawai;
+--gaji
+DILIMITER $$
+CREATE PROCEDURE inputGaji(gapok double,tunjab double,pegawai_id int)
+BEGIN
+    INSERT INTO gaji(gapok,tunjab,pegawai_id) VALUES (gapok,tunjab,pegawai_id);
+END$$
+
+CALL inputGaji(5000000,1000000,1);
+SELECT * FROM gaji
+--fungsi showpegawai
+DELIMITER $$
+CREATE PROCEDURE showGaji()
+BEGIN
+  SELECT * FROM gaji
+  END $$
+
+  CALL showGaji;
+
+--fungsi total gaji
+CREATE PROCEDURE totalGaji(in gapok double, in tunjab double, out total double)
+BEGIN
+	SET total = gapok + tunjab;
+	SELECT @total;
+END$$
+CALL totalGaji(1000,200,@totalGaji); SELECT @totalGaji as total_gaji;
+
+CALL totalGaji(100000,20000,@totalGaji);
+SELECT pegawai.nip, pegawai.nama,  jabatan.nama, AS posisi, divisi.nama AS departemen, 
+gaji.gapok, gaji.tunjab, SELECT @totalGaji( in gapok double, in tunjab double, out total double) FROM pegawai
+INNER JOIN gaji ON gaji.id = pegawai.id
+INNER JOIN divisi ON divisi.id = pegawai.divisi_id
+INNER JOIN jabatan ON jabatan.id= pegawai.id
+
+--view---
+CREATE VIEW slip_gaji_pegawai_vw AS
+DELIMITER $$
+CREATE PROCEDURE inputJabatan(nip char(3),nama varchar(45),jabatan_id int,divisi_id int, gender enum('L','P'),tmp_lahir varchar(45),tgl_lahir date, alamat text)
+BEGIN
+    INSERT INTO pegawai(nip,nama,jabatan,divisi,gender,tmp_lahir,tgl_lahir,alamat) VALUES (nip,nama,jabatan_id,divisi_id,gender,tmp_lahir,tgl_lahir,alamat);
+END$$
+
+CALL inputPegawai('222','arif',1,1,'L','probolinngo','2002-08-28','kraksaan');
+SELECT * FROM pegawai;
+--fungsi showpegawai
+DELIMITER $$
+CREATE PROCEDURE showPegawai()
+BEGIN
+  SELECT * FROM pegawai;
+  END $$
+
+  CALL showPegawai;
+--gaji
+DILIMITER $$
+CREATE PROCEDURE inputGaji(gapok double,tunjab double,pegawai_id int)
+BEGIN
+    INSERT INTO gaji(gapok,tunjab,pegawai_id) VALUES (gapok,tunjab,pegawai_id);
+END$$
+
+CALL inputGaji(5000000,1000000,1);
+SELECT * FROM gaji
+--fungsi showpegawai
+DELIMITER $$
+CREATE PROCEDURE showGaji()
+BEGIN
+  SELECT * FROM gaji
+  END $$
+
+  CALL showGaji;
+
+--fungsi total gaji
+CREATE PROCEDURE totalGaji(in gapok double, in tunjab double, out total double)
+BEGIN
+	SET total = gapok + tunjab;
+	SELECT @total;
+END$$
+CALL totalGaji(1000,200,@totalGaji); SELECT @totalGaji as total_gaji;
+
+CALL totalGaji(100000,20000,@totalGaji);
+SELECT pegawai.nip, pegawai.nama,  jabatan.nama, AS posisi, divisi.nama AS departemen, 
+gaji.gapok, gaji.tunjab, SELECT @totalGaji( in gapok double, in tunjab double, out total double) FROM pegawai
+INNER JOIN gaji ON gaji.id = pegawai.id
+INNER JOIN divisi ON divisi.id = pegawai.divisi_id
+INNER JOIN jabatan ON jabatan.id= pegawai.id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

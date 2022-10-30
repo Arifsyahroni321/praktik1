@@ -1,0 +1,154 @@
+Microsoft Windows [Version 10.0.19044.2006]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Rony>cd \
+
+C:\>cd xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password: ****
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 28
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+--menampilakn semua database--
+MariaDB [(none)]> show databases;
++---------------------------+
+| Database                  |
++---------------------------+
+| akademik                  |
+| akademik1                 |
+| akademik2                 |
+| apk_penjualan             |
+| apksekolah                |
+| bab20                     |
+| bd_rsud                   |
+| cdcol                     |
+| costumer_order            |
+| crud_ci                   |
+| db_akademikkuliah         |
+| db_cmd                    |
+| db_dekstop1               |
+| db_gatepass               |
+| db_kebersihan             |
+| db_moharifsyahroni_f_2021 |
+| db_psb                    |
+| db_psb_peserta            |
+| db_puskesmas              |
+| db_rentalmobil            |
+| db_setyoagungedho_f_2021  |
+| db_sipmas                 |
+| db_sppd                   |
+| db_toko                   |
+| db_ujiukk                 |
+| db_ukk                    |
+| db_ukk2020                |
+| dunia                     |
+| gd_sirs                   |
+| hms                       |
+| hospital_hmssell          |
+| information_schema        |
+| kampus                    |
+| kelas_xii                 |
+| lembaga_syahroni          |
+| lsp_2020                  |
+| master                    |
+| mataku                    |
+| mvc                       |
+| mysql                     |
+| pendaftaran_siswa         |
+| penjualan                 |
+| percobaan                 |
+| performance_schema        |
+| perpus                    |
+| perpussmk                 |
+| phpdasar                  |
+| phpmyadmin                |
+| plynnmsyrkt               |
+| praktik_smk               |
+| projek_perpus             |
+| ronikeren                 |
+| ronikeren2                |
+| rumah_sakit               |
+| rumahsakit                |
+| sekolah                   |
+| sekolah1                  |
+| siakad                    |
+| test                      |
+| ujicoba_ddl_dml           |
+| ukk2020_laundry           |
+| ukk2020_spk               |
+| ukk2020_spp               |
+| ukk_laundry2020           |
+| ukk_lelang2020            |
+| ukk_pengaduan2020         |
+| ukk_spp2020               |
++---------------------------+
+67 rows in set (1.562 sec)
+--membuat database baru dengan nama dbpegawai--
+MariaDB [(none)]> CREATE DATABASE dbpegawai;
+Query OK, 1 row affected (0.220 sec)
+--menggunakan database tersebut--
+MariaDB [(none)]> USE dbpegawai;
+Database changed
+MariaDB [dbpegawai]> SHOW TABLES;
+Empty set (0.319 sec)
+--membuat tabel dalam database--
+MariaDB [dbpegawai]> CREATE TABLE divisi(
+    -> id int primary key auto_increment,
+    -> nama varchar(30) not null unique);
+Query OK, 0 rows affected (1.264 sec)
+--menapilkan tabel divisi--
+MariaDB [dbpegawai]> DESC divisi;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nama  | varchar(30) | NO   | UNI | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.287 sec)
+
+--membuat tabel pegawai dan di foreign key--
+MariaDB [dbpegawai]> CREATE TABLE pegawai(
+    -> id int primary key auto_increment,
+    -> nip char(11) not null unique,
+    -> nama varchar(30) not null,
+    -> gender enum('L','P') not null,
+    -> tmplahir varchar(30) not null,
+    -> tgllahir date not null,
+    -> iddivisi int not null references divisi(id),
+    -> alamat text );
+Query OK, 0 rows affected (0.408 sec)
+
+MariaDB [dbpegawai]> DESCRIBE pegawai;
++----------+---------------+------+-----+---------+----------------+
+| Field    | Type          | Null | Key | Default | Extra          |
++----------+---------------+------+-----+---------+----------------+
+| id       | int(11)       | NO   | PRI | NULL    | auto_increment |
+| nip      | char(11)      | NO   | UNI | NULL    |                |
+| nama     | varchar(30)   | NO   |     | NULL    |                |
+| gender   | enum('L','P') | NO   |     | NULL    |                |
+| tmplahir | varchar(30)   | NO   |     | NULL    |                |
+| tgllahir | date          | NO   |     | NULL    |                |
+| iddivisi | int(11)       | NO   |     | NULL    |                |
+| alamat   | text          | YES  |     | NULL    |                |
++----------+---------------+------+-----+---------+----------------+
+8 rows in set (0.161 sec)
+
+MariaDB [dbpegawai]> DESC divisi;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nama  | varchar(30) | NO   | UNI | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.028 sec)
+
+MariaDB [dbpegawai]>
